@@ -65,9 +65,17 @@ DELETE FROM Customer WHERE id = 1;
 SELECT * FROM Customer;
 SELECT * FROM OrderDetails;
 
-SELECT C.*, O.* FROM Customer AS C INNER JOIN OrderDetails AS O ON C.id = O.CustomerID;
-SELECT C.*, O.* FROM Customer AS C LEFT JOIN OrderDetails AS O ON C.id = O.CustomerID;
-SELECT C.*, O.* FROM Customer AS C RIGHT JOIN OrderDetails AS O ON C.id = O.CustomerID;
+SELECT C.*, O.* FROM Customer AS C 
+INNER JOIN OrderDetails AS O 
+ON C.id = O.CustomerID;
+
+SELECT C.*, O.* FROM Customer AS C 
+LEFT JOIN OrderDetails AS O 
+ON C.id = O.CustomerID;
+
+SELECT C.*, O.* FROM Customer AS C
+RIGHT JOIN OrderDetails AS O 
+ON C.id = O.CustomerID;
 
 -- VIEW IN MYSQL
 SELECT * FROM Customer;
