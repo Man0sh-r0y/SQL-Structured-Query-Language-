@@ -1,3 +1,4 @@
+-- Create Worker Table 
 CREATE TABLE Worker ( 
   Worker_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,  
   First_Name CHAR(25),
@@ -7,7 +8,8 @@ CREATE TABLE Worker (
   Department CHAR(25)
 );  
 
-Insert INTO Worker 
+-- Inserting values into the Worker Table
+Insert INTO Worker
     (Worker_id, First_Name, Last_Name, Salary, Joining_Date, Department) 
     VALUES
     (001, 'Monika' , 'Arora', 100000, '14-02-20 09:00:00'  , 'HR'),
@@ -19,6 +21,7 @@ Insert INTO Worker
     (007, 'Satish' , 'Kumar' , 75000, '14-01-20 09:00:00' , 'Account'),
     (008, 'Geetika' , 'Chauhan' , 90000, '14-04-11 09:00:00' , 'Admin'); 
 
+-- Inserting one more value into the Worker Table
 Insert INTO Worker (Worker_id, First_Name, Last_Name, Salary, Joining_Date) 
     VALUES (009, 'Manish' , 'Chauhan' , 90000, '14-04-11 09:00:00');
         
@@ -34,11 +37,12 @@ CREATE TABLE Bonus (
     -- The "WORKER_REF_ID" column in the "Bonus" table is a foreign key, meaning it refers to the primary key of another table.
     -- It references the "WORKER_ID" column in the "Worker" table.
 		REFERENCES Worker(WORKER_ID) -- This ensures that every "WORKER_REF_ID" in the "Bonus" table must correspond to an existing "WORKER_ID" in the "Worker" table.
-        ON DELETE CASCADE -- This is a constraint that specifies what happens when a referenced row in the "Worker" table is deleted.
+    ON DELETE CASCADE -- This is a constraint that specifies what happens when a referenced row in the "Worker" table is deleted.
         -- In this case, it's set to "CASCADE", which means if a row in the "Worker" table is deleted, 
         -- all associated rows in the "Bonus" table with the same "WORKER_REF_ID" will also be deleted automatically.
 );
 
+-- Insert into Bonus Table
 INSERT INTO Bonus
        (WORKER_REF_ID , BONUS_AMOUNT , BONUS_DATE)
        VALUES 
@@ -55,7 +59,7 @@ SELECT * FROM Bonus;
 CREATE TABLE Title (
 	WORKER_REF_ID INT,
 	WORKER_TITLE CHAR(25),
-	AFFECTED_FROM DATETIME,
+	AFFECTED_FROM DATETIME, -- this column stores a date and time value
 	FOREIGN KEY (WORKER_REF_ID) REFERENCES Worker(WORKER_ID) ON DELETE CASCADE
 );
 
@@ -73,18 +77,18 @@ INSERT INTO Title
     
 SELECT * FROM Title;
 
-SELECT * FROM Worker WHERE Salary > 80000;
-SELECT * FROM Worker WHERE Department = 'HR';
-SELECT * FROM Worker WHERE Salary BETWEEN 80000 AND 300000;
-SELECT * FROM Worker WHERE Department = 'HR' OR Department = 'Admin';
+SELECT * FROM Worker WHERE Salary > 80000; -- Show the workers who have greater than 80000 salary
+SELECT * FROM Worker WHERE Department = 'HR'; -- Show the wrokers who work at HR departments
+SELECT * FROM Worker WHERE Salary BETWEEN 80000 AND 300000;  -- Show the workers (salary between 80000 and 300000)
+SELECT * FROM Worker WHERE Department = 'HR' OR Department = 'Admin'; -- Workers are in HR or Admin department
 SELECT * FROM Worker WHERE Department IN ('HR', 'Admin'); -- better way to do the previous query
-SELECT * FROM Worker WHERE Department NOT IN ('HR', 'Admin'); 
-SELECT * FROM Worker WHERE Department IS NULL;
-SELECT * FROM Worker WHERE Department IS NOT NULL;
-SELECT * FROM Worker WHERE First_Name LIKE '%i%';
+SELECT * FROM Worker WHERE Department NOT IN ('HR', 'Admin'); -- Those worker who aren't in HR or Admin
+SELECT * FROM Worker WHERE Department IS NULL; -- for any workers whose department is set null
+SELECT * FROM Worker WHERE Department IS NOT NULL; -- for the workers whose department is set null
+SELECT * FROM Worker WHERE First_Name LIKE '%i%'; -- first name contains i
 SELECT * FROM Worker WHERE First_Name LIKE '_i'; -- i at the 2nd place of the first name
-SELECT * FROM Worker ORDER BY Salary; -- in the oder of increasing order of salary
-SELECT * FROM Worker ORDER BY Salary DESC; -- in the order of decreasing order of salary
+SELECT * FROM Worker ORDER BY Salary; -- show workers in increasing order of salary
+SELECT * FROM Worker ORDER BY Salary DESC; --  show workers in decreasing order of salary
 SELECT DISTINCT Department FROM Worker; -- get the unique values of the department
 SELECT Department FROM Worker GROUP BY Department; -- get the unique/distinct values of the department => (ans: HR, Admin, Account)
 SELECT Department, COUNT(Department) FROM Worker GROUP BY Department; -- how many employees are there in every department
@@ -94,6 +98,6 @@ SELECT Department, MIN(Salary) FROM Worker GROUP BY Department; -- department wi
 SELECT Department, SUM(Salary) FROM Worker GROUP BY Department; -- department wise sum salary
 SELECT Department, COUNT(Department) FROM Worker GROUP BY Department HAVING COUNT(Department) > 2; -- List all the  departments where are more than 2 employees working
 
-DROP TABLE IF EXISTS Bonus;
+DROP TABLE IF EXISTS Bonus; 
 DROP TABLE IF EXISTS Title;
 DROP TABLE IF EXISTS Worker;

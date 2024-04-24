@@ -37,9 +37,10 @@ REPLACE INTO Customer (id, Name, City) -- I have to give id otherwise it'll show
     -- Replace the row with id = 8 with the row with id = 8
     -- So, Other attributes (like gender, address ..etc) will be set to NULL as they are not selected
 
-SELECT * FROM Customer;
+SELECT * FROM Customer; 
 
 SET SQL_SAFE_UPDATES = 0;
+
 UPDATE Customer SET Pincode = 110000; -- Set all the pincode to 110000
 UPDATE Customer SET Pincode = Pincode + 1; -- Increase all the pincode by 1
 DELETE FROM Customer WHERE id = 7;
@@ -65,14 +66,17 @@ DELETE FROM Customer WHERE id = 1;
 SELECT * FROM Customer;
 SELECT * FROM OrderDetails;
 
+-- INNER JOIN
 SELECT C.*, O.* FROM Customer AS C 
 INNER JOIN OrderDetails AS O 
 ON C.id = O.CustomerID;
 
+-- LEFT JOIN
 SELECT C.*, O.* FROM Customer AS C 
 LEFT JOIN OrderDetails AS O 
 ON C.id = O.CustomerID;
 
+-- RIGHT JOIN
 SELECT C.*, O.* FROM Customer AS C
 RIGHT JOIN OrderDetails AS O 
 ON C.id = O.CustomerID;
