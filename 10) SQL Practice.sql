@@ -171,10 +171,13 @@ select curdate();
 select now();
 
 -- Q-32. Write an SQL query to show the top n (say 5) records of a table order by descending salary.
-select * from worker order by salary desc LIMIT 5;
+select * from worker order by salary desc LIMIT 5; -- LIMIT determines how many entry I need
 
 -- Q-33. Write an SQL query to determine the nth (say n=5) highest salary from a table.
 select * from worker order by salary desc LIMIT 4,1;
+-- LIMIT 4,1 means leave those 4 records and show the 5th record (which is the 1 record ahead after the 4 records).
+-- If I need to show nth highest salary, then I need to leave n-1 records and show the next record.
+-- then it would be LIMIT n-1,1
 
 -- Q-34. Write an SQL query to determine the 5th highest salary without using LIMIT keyword.
 select salary from worker w1
@@ -186,6 +189,8 @@ where w2.salary >= w1.salary
  
 -- Q-35. Write an SQL query to fetch the list of employees with the same salary.
 select w1.* from worker w1, worker w2 where w1.salary = w2.salary and w1.worker_id != w2.worker_id;
+-- INNER JOIN is implemented here
+-- to avoid repeated columns I used w1.* here
 
 -- Q-36. Write an SQL query to show the second highest salary from a table using sub-query.
 select max(salary) from worker
@@ -195,6 +200,7 @@ where salary not in (select max(salary) from worker);
 select * from worker
 UNION ALL
 select * from worker ORDER BY worker_id;
+-- if I didn't do order by at first the 1st table will be shown first and then the 2nd table will be shown vertically.
 
 -- Q-38. Write an SQL query to list worker_id who does not get bonus.
 select worker_id from worker where worker_id not in (select worker_ref_id from bonus);
@@ -203,24 +209,28 @@ select worker_id from worker where worker_id not in (select worker_ref_id from b
 select * from worker where worker_id <= ( select count(worker_id)/2 from worker);
 
 -- Q-40. Write an SQL query to fetch the departments that have less than 4 people in it.
-select department, count(department) as depCount from worker group by department having depCount < 4;
+select department, count(WORKER_ID) as no_of_workers from worker group by department having no_of_workers < 4;
 
 -- Q-41. Write an SQL query to show all departments along with the number of people in there.
-select department, count(department) as depCount from worker group by department;
+select department, count(WORKER_ID) as no_of_workers from worker group by department;
 
 -- Q-42. Write an SQL query to show the last record from a table.
 select * from worker where worker_id = (select max(worker_id) from worker);
+-- the max worker id record will be the last record
 
 -- Q-43. Write an SQL query to fetch the first row of a table.
 select * from worker where worker_id = (select min(worker_id) from worker);
+-- the min worker id record will be the first record
 
 -- Q-44. Write an SQL query to fetch the last five records from a table.
 (select * from worker order by worker_id desc limit 5) order by worker_id;
 
 -- Q-45. Write an SQL query to print the name of employees having the highest salary in each department.
 select w.department, w.first_name, w.salary from
- (select max(salary) as maxsal, department from worker group by department) temp
+ (select max(salary) as maxsal, department from worker group by department) as temp
 inner join worker w on temp.department = w.department and temp.maxsal = w.salary;
+-- at first show the temporary table: (select max(salary) as maxsal, department from worker group by department) as temp
+-- then join the temporary table with worker table and show the required columns.
 
 -- Q-46. Write an SQL query to fetch three max salaries from a table using co-related subquery
 select distinct salary from worker w1
