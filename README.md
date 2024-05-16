@@ -16,3 +16,11 @@
 - SET operations in SQL (UNION/INTERSECT/MINUS)
 - Sub-queries in SQL
 - Views in SQL
+
+## SQL Server Functions
+
+[Click Here (W3 Schools)](https://www.w3schools.com/sql/sql_ref_sqlserver.asp)
+
+## SQL Tutorial
+
+[Click Here (W3 Schools)](https://www.w3schools.com/sql/)
