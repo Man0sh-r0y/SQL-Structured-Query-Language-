@@ -181,7 +181,7 @@ select * from worker order by salary desc LIMIT 4,1;
 
 -- Q-34. Write an SQL query to determine the 5th highest salary without using LIMIT keyword.
 select salary from worker w1
-WHERE 4 = (
+WHERE 5 = (
 SELECT COUNT(DISTINCT (w2.salary))
 from worker w2
 where w2.salary >= w1.salary
@@ -233,10 +233,28 @@ inner join worker w on temp.department = w.department and temp.maxsal = w.salary
 -- then join the temporary table with worker table and show the required columns.
 
 -- Q-46. Write an SQL query to fetch three max salaries from a table using co-related subquery
-select distinct salary from worker w1
-where 3 >= (select count(distinct salary) from worker w2 where w1.salary <= w2.salary) order by w1.salary desc;
--- DRY RUN AFTER REVISING THE CORELATED SUBQUERY CONCEPT FROM LEC-9.
+select distinct salary from worker as w1
+where 3 >= (select count(distinct salary) from worker as w2 where w1.salary <= w2.salary) order by w1.salary desc;
+-- DRY RUN AFTER REVISING THE CORELATED SUBQUERY CONCEPT
+-- this above query will give salary like: 
+-- +--------+
+-- | salary |
+-- +--------+
+-- | 500000 |
+-- | 300000 |
+-- | 200000 |
+-- +--------+
+
+-- Another way (Using LIMIT Keyword)
 select distinct salary from worker order by salary desc limit 3;
+-- this above query will give salary like: 
+-- +--------+
+-- | salary |
+-- +--------+
+-- | 500000 |
+-- | 300000 |
+-- | 200000 |
+-- +--------+
 
 -- Q-47. Write an SQL query to fetch three min salaries from a table using co-related subquery
 select distinct salary from worker w1
