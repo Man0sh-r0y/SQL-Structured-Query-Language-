@@ -19,7 +19,7 @@ INSERT INTO Customer VALUES
     (9, 'Sujit Kumar', 'Kolkata', 'M', 'Kolkata', 700089),
     (10, 'Kaushik Roy', 'Kolkata', 'M', 'Kolkata', 700089);
 
-INSERT INTO Customer (id, Name) VALUES(11, 'Bijoy Prasad Modi');
+INSERT INTO Customer (id, Name) VALUES(11, 'Riya Naskar');
 
 SELECT * FROM Customer WHERE id = 11;
 
